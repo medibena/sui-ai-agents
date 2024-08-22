@@ -36,3 +36,19 @@ npm run dev
 ```bash
 npm run dev
 ```
+
+## Screenshots
+### Call Page
+![shot1](./images/shot1.png)
+
+### Agents Create Page
+![shot2](./images/shot2.png)
+
+### Agents Page
+![shot3](./images/shot3.png)
+
+### History Page
+![shot5](./images/shot5.png)
+
+## Demo Videos
+[https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4)

@@ -25,7 +25,11 @@ export function History() {
     if (isSuccess && data && data.data) {
         for (var i = 0; i < data.data.length; i++) {
             let item = data.data[i];
-            item.link = "https://" + Contract.Network + ".suivision.xyz/txblock/" + item.txid;
+            if (Contract.Network == "mainnet") {
+                item.link = "https://suivision.xyz/txblock/" + item.txid;
+            } else {
+                item.link = "https://" + Contract.Network + ".suivision.xyz/txblock/" + item.txid;
+            }
             let txid: string = item.txid;
             item.txid_good = txid.substring(0, 8) + "..." + txid.substring(txid.length - 6)
             if (item.code == 500) {

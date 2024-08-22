@@ -38,6 +38,7 @@ export function useTransactionExecution() {
     } catch (e: any) {
       console.error(e);
       toast.error(`Failed to execute transaction: ${e.message as string}`);
+      throw e;
     }
   };
 

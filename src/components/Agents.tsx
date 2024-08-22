@@ -283,7 +283,7 @@ export function Agents() {
                     <Dialog.Trigger>
                         <Box></Box>
                     </Dialog.Trigger>
-                    <Dialog.Content maxWidth="450px">
+                    <Dialog.Content maxWidth="450px" onInteractOutside={(e) => { e.preventDefault(); }}>
                         <Dialog.Title>Submit</Dialog.Title>
                         <Dialog.Description></Dialog.Description>
 
@@ -304,7 +304,13 @@ export function Agents() {
                             </Box>
                         </Box>
 
-
+                        <Flex gap="3" mt="4" justify="end">
+                            <Dialog.Close>
+                                <Button variant="soft" color="gray">
+                                    Close
+                                </Button>
+                            </Dialog.Close>
+                        </Flex>
                     </Dialog.Content>
                 </Dialog.Root>
             </Container>
