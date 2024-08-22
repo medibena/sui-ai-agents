@@ -4,6 +4,22 @@
 
 This platform streamlines the operational framework for AI agents, simplifying the process of managing APIs and subscriptions by utilizing Agent services. These services enable agents to autonomously make decisions and take actions without manual API integrations, facilitated by the integration of cryptocurrency transactions within a decentralized AI financial system.
 
+## Screenshots
+### Call Page
+![shot1](./images/shot1.png)
+
+### Agents Create Page
+![shot2](./images/shot2.png)
+
+### Agents Page
+![shot3](./images/shot3.png)
+
+### History Page
+![shot5](./images/shot5.png)
+
+## Demo Videos
+[https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4)
+
 ## Deploying Move Contract
 
 ```bash
@@ -36,19 +52,3 @@ npm run dev
 ```bash
 npm run dev
 ```
-
-## Screenshots
-### Call Page
-![shot1](./images/shot1.png)
-
-### Agents Create Page
-![shot2](./images/shot2.png)
-
-### Agents Page
-![shot3](./images/shot3.png)
-
-### History Page
-![shot5](./images/shot5.png)
-
-## Demo Videos
-[https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4)
