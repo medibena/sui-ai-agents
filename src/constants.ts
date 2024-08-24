@@ -8,6 +8,7 @@ export const Contract = {
   ContainerObjectId: "0x7f083161132e804985e833fc64b3ca5aa4093da5b6a9b41685278e001fd5e1f9",
   Network: "mainnet",
   SuiType: "0x2::sui::SUI",
-  BuckType: "0x2::coin::CoinMetadata<0xce7ff77a83ea0cb6fd39bd8748e2ec89a3f41e8efdc3f4eb123e0ca37b184db2::buck::BUCK>",
+  BuckType: "0xce7ff77a83ea0cb6fd39bd8748e2ec89a3f41e8efdc3f4eb123e0ca37b184db2::buck::BUCK",
   SuiFullType: "0000000000000000000000000000000000000000000000000000000000000002::sui::SUI",
+  BuckFullType: "ce7ff77a83ea0cb6fd39bd8748e2ec89a3f41e8efdc3f4eb123e0ca37b184db2::buck::BUCK",
 };

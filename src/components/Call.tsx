@@ -61,6 +61,9 @@ export function Call() {
             if (type_name && type_name.name == Contract.SuiFullType) {
                 item.type = "SUI";
                 item.small_price = item.price / 1_000_000_000.0;
+            } else if (type_name && type_name.name == Contract.BuckFullType) {
+                item.type = "BUCK";
+                item.small_price = item.price / 1_000_000_000.0;
             }
 
             if (item.name) {

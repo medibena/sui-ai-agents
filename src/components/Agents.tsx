@@ -62,6 +62,9 @@ export function Agents() {
             if (type_name && type_name.name == Contract.SuiFullType) {
                 item.type = "SUI";
                 item.small_balance = item.balance / 1_000_000_000.0;
+            } else if (type_name && type_name.name == Contract.BuckFullType) {
+                item.type = "BUCK";
+                item.small_balance = item.balance / 1_000_000_000.0;
             } else {
                 item.type = "";
             }
@@ -160,7 +163,7 @@ export function Agents() {
                                     <Select.Content position="popper" sideOffset={5} className="SelectContent">
                                         <Select.Group>
                                             <Select.Item value="SUI">SUI</Select.Item>
-                                            {/* <Select.Item value="BUCK">BUCK</Select.Item> */}
+                                            <Select.Item value="BUCK">BUCK</Select.Item>
                                         </Select.Group>
                                     </Select.Content>
                                 </Select.Root>

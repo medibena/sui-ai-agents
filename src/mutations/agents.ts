@@ -1,8 +1,9 @@
 import { useTransactionExecution } from "../hooks/useTransactionExecution";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "@mysten/sui/transactions";
-import { useCurrentAccount } from "@mysten/dapp-kit";
+import { useCurrentAccount, useSuiClient } from "@mysten/dapp-kit";
 import { Contract } from "../constants";
+import toast from "react-hot-toast";
 
 export function useCreateAiAgent() {
     const currentAccount = useCurrentAccount();
@@ -37,6 +38,7 @@ export function useCreateAiAgent() {
                 price_amount = price * 1_000_000_000;
             } else if (token == "BUCK") {
                 coinType = Contract.BuckType;
+                price_amount = price * 1_000_000_000;
             }
 
             const txb = new Transaction();
@@ -112,6 +114,7 @@ export function useDeleteAiAgent() {
 export function useCallAiAgent() {
     const currentAccount = useCurrentAccount();
     const executeTransaction = useTransactionExecution();
+    const client = useSuiClient();
 
     return useMutation({
         mutationFn: async ({
@@ -135,11 +138,43 @@ export function useCallAiAgent() {
                 amount = price;
             } else if (token == "BUCK") {
                 coinType = Contract.BuckType;
+                amount = price;
             }
 
             const txb = new Transaction();
 
-            const [coin] = txb.splitCoins(txb.gas, [amount]);
+            const coins = (
+                await client.getCoins({
+                    owner: currentAccount.address,
+                    coinType: coinType,
+                })
+            ).data;
+
+            const [primaryCoin, ...mergeCoins] = coins.filter(function(coin) {
+                console.log(coin.coinType)
+                return coin.coinType == coinType;
+            });
+
+            if (primaryCoin === undefined) {
+                toast.error(token + " not enough")
+                return;
+            }
+
+            const [transferCoin] = (() => {
+                if (coinType === Contract.SuiType) {
+                    return txb.splitCoins(txb.gas, [amount]);
+                } else {
+                    const primaryCoinInput = txb.object(primaryCoin.coinObjectId);
+                    if (mergeCoins.length) {
+                        txb.mergeCoins(
+                            primaryCoinInput,
+                            mergeCoins.map((coin) => txb.object(coin.coinObjectId)),
+                        );
+                    }
+                    return txb.splitCoins(primaryCoinInput, [amount]);
+                }
+            })();
+
             txb.setGasBudget(10000000);
             txb.moveCall({
                 target: `${Contract.PackageId}::ai_agent::call_ai_agent`,
@@ -147,7 +182,7 @@ export function useCallAiAgent() {
                     txb.object(Contract.ContainerObjectId),
                     txb.pure.id(id),
                     txb.pure.string(params),
-                    coin,
+                    transferCoin,
                 ],
                 typeArguments: [coinType],
             });
