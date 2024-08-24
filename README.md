@@ -4,6 +4,8 @@
 
 This platform streamlines the operational framework for AI agents, simplifying the process of managing APIs and subscriptions by utilizing Agent services. These services enable agents to autonomously make decisions and take actions without manual API integrations, facilitated by the integration of cryptocurrency transactions within a decentralized AI financial system.
 
+**Sui-AI-Agents** now support **SUI** and **BUCK** as underlying payment token
+
 ## Screenshots
 ### Call Page
 ![shot1](./images/shot1.png)
