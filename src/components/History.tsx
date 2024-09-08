@@ -87,7 +87,7 @@ export function History() {
                                         </Flex>
                                         <Flex position="sticky" justify="between">
                                             <Box>
-                                                <Text>walrus Blob ID</Text>
+                                                <Text>Walrus Blob ID</Text>
                                             </Box>
                                             <Box>
                                                 <Link target="_blank" href={jsonData.blob_id_link}>{jsonData.blob_id_base64}</Link>
