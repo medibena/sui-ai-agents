@@ -20,10 +20,12 @@ export default class DbResults {
         return p + "/" + nonce + ".json";
     }
 
-    public static WriteResult(caller: string, id: string, nonce: number, result: any) {
+    public static WriteResult(caller: string, id: string, nonce: number, result: any): string {
         var data_path = this.getDataPath(caller, id, nonce);
 
         writeFileSync(data_path, result);
+
+        return data_path;
     }
 
     public static GetResult(caller: string, id: string, nonce: number): string {

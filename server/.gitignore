@@ -16,3 +16,4 @@ tests/**/coverage/
 logs/*
 data/*
 data_dev/*
+data2/*

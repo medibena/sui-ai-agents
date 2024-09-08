@@ -14,7 +14,8 @@ import {
 } from '../typing';
 
 import aes from '../encryption/aes';
-import { makeRequest } from '../utils/util';
+import { makeRequest, walrusUpload } from '../utils/util';
+import { setAiAgentResultBlob } from '../utils/sui-utils';
 
 export const handleEventObjects = async (events: SuiEvent[], type: string) => {
 	for (const event of events) {
@@ -37,6 +38,9 @@ export const handleEventObjects = async (events: SuiEvent[], type: string) => {
 			DbEvents.UpdatePrice(event.parsedJson as UpdatePriceMessage);
 		} else if (type.indexOf("CallAIMessage") != -1) {
 			handleCallAIMessage(event, event.parsedJson as CallAIMessage);
+		} else if (type.indexOf("CallAIResult") != -1) {
+			console.log("CallAIResult")
+			console.log(event.parsedJson)
 		}
 	}
 
@@ -48,6 +52,7 @@ export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessag
 	let params = message.params;
 	let nonce = message.nonce;
 	let caller = message.caller;
+	let type_name = message.type_name;
 
 	let data = DbEvents.GetAIAgent(id);
 	if (data != null) {
@@ -60,6 +65,7 @@ export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessag
 		});
 
 		console.log("handleCallAIMessage")
+		console.log(message);
 		console.log(data)
 		console.log(requestUrl);
 		console.log(response);
@@ -69,7 +75,22 @@ export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessag
 			response.params = paramsData;
 			response.time = event.timestampMs;
 			response.txid = event.id.txDigest;
-			DbResults.WriteResult(caller, id, nonce, response);
+
+			// let dataResult: string = JSON.stringify(response);
+			let data_path = DbResults.WriteResult(caller, id, nonce, response);
+
+			let blobResult = await walrusUpload(data_path);
+
+			console.log(blobResult)
+			if (blobResult.blob_id) {
+				await setAiAgentResultBlob({
+					id,
+					nonce,
+					type_name,
+					blobId: blobResult.sui_object_id,
+					blob_id_base64: blobResult.blob_id
+				})
+			}
 		} else {
 			console.error("handleCallAIMessage error ");
 			console.error(response);

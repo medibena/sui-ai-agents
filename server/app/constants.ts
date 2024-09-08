@@ -29,3 +29,5 @@ export const CONFIG = {
 	NETWORK: (process.env.NETWORK as Network) || 'testnet',
 	AI_AGENT_CONTRACT: process.env.AI_AGENT_CONTRACT + '',
 };
+
+export const SuiType: string =  "0x2::sui::SUI";

@@ -2,10 +2,11 @@
 
 [move]
 version = 2
-manifest_digest = "52BC917E66F7934ACE364425DFE27213F012832694B5D853A6F9B58E5903B9DE"
-deps_digest = "F8BBB0CCB2491CA29A3DF03D6F92277A4F3574266507ACD77214D37ECA3F3082"
+manifest_digest = "829E970D294DAA658E55FFFDCFB43046E78177EE4A745B3E311C5A827703257E"
+deps_digest = "3C4103934B1E040BB6B23F1D610B4EF9F2F1166A50A104EADCF77467C004C600"
 dependencies = [
   { name = "Sui" },
+  { name = "blob_store" },
 ]
 
 [[move.package]]
@@ -20,8 +21,16 @@ dependencies = [
   { name = "MoveStdlib" },
 ]
 
+[[move.package]]
+name = "blob_store"
+source = { local = "..\\dependencies\\blob_store" }
+
+dependencies = [
+  { name = "Sui" },
+]
+
 [move.toolchain-version]
-compiler-version = "1.30.1"
+compiler-version = "1.32.2"
 edition = "legacy"
 flavor = "sui"
 
@@ -29,12 +38,6 @@ flavor = "sui"
 
 [env.testnet]
 chain-id = "4c78adac"
-original-published-id = "0x5fffdefc9d7059bbc3c418f93b03629a7fa3581853b508ea7a342f4ea92663c1"
-latest-published-id = "0x5fffdefc9d7059bbc3c418f93b03629a7fa3581853b508ea7a342f4ea92663c1"
-published-version = "1"
-
-[env.mainnet]
-chain-id = "35834a8a"
-original-published-id = "0xe8320f49956af16e7cd93066edbca1caf6509b9a1dba66003021811abd5097bf"
-latest-published-id = "0xe8320f49956af16e7cd93066edbca1caf6509b9a1dba66003021811abd5097bf"
+original-published-id = "0xf83419daf5c5cdbdacfa8a2b6ccfad2228474b53a79135cf05124456e17b23e2"
+latest-published-id = "0xf83419daf5c5cdbdacfa8a2b6ccfad2228474b53a79135cf05124456e17b23e2"
 published-version = "1"

@@ -112,6 +112,7 @@ export type CallAIMessage = {
     params: string;
     nonce: number;
     caller: string;
+    type_name: string;
 }
 
 export type UpdateNameMessage = {

@@ -2,6 +2,9 @@ import crypto from 'crypto';
 import moment from 'moment';
 import fs from 'fs';
 import axios, { AxiosRequestConfig, Method } from 'axios';
+import child_process from 'child_process';
+const util = require('util');
+const exec = util.promisify(child_process.exec);
 
 export const rgbToHex = (r: number, g: number, b: number): string => {
     function valueToHex(c: number) {
@@ -118,6 +121,34 @@ export const onlyNumber = (val: any) => {
 
 export const writeFileSync = function(p: string, data: any) {
     fs.writeFileSync(p, JSON.stringify(data, null, 2));
+}
+
+export const walrusUpload = async function(data_path: string) {
+    // const config: AxiosRequestConfig<string> = {
+    //     method: 'PUT',
+    //     url: 'https://publisher-devnet.walrus.space/v1/store?epochs=1',
+    //     data: data
+    // };
+
+    // const response = await axios(config);
+
+    // return response.data;
+    const cmd = 'walrus store ' + data_path;
+    console.log(cmd);
+    const { stdout, stderr } = await exec(cmd)
+    var result = stdout;
+    var blob_id = result.match(/Blob ID: (.*?)\n/)
+    if (blob_id) {
+        blob_id = blob_id[1];
+    }
+    var sui_object_id = result.match(/Sui object ID: (.*?)\n/)
+    if (sui_object_id) {
+        sui_object_id = sui_object_id[1];
+    }
+    return {
+        blob_id: blob_id,
+        sui_object_id: sui_object_id
+    }
 }
 
 export const makeRequest = async function (metadata: { requestUrl: string; requestType: string; requestHeaders?: { [key: string]: string }; requestParams?: { [key: string]: string | number } }): Promise<any> {

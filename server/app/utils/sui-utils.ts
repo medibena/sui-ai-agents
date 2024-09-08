@@ -6,7 +6,7 @@ import { getFullnodeUrl, SuiClient, SuiObjectResponse } from '@mysten/sui/client
 import { Ed25519Keypair } from '@mysten/sui/keypairs/ed25519';
 import { Transaction } from '@mysten/sui/transactions';
 import { fromB64 } from '@mysten/sui/utils';
-import { CONFIG } from '../constants';
+import { CONFIG, SuiType } from '../constants';
 
 export type Network = 'mainnet' | 'testnet' | 'devnet' | 'localnet';
 
@@ -19,6 +19,12 @@ export const getActiveAddress = () => {
 };
 
 /** Returns a signer based on the active address of system's sui. */
+// export const getSigner = () => {
+// 	let mnemonic: string = process.env.SUI_MNEMONIC || "";
+// 	const pair = Ed25519Keypair.deriveKeypair(mnemonic);
+// 	return pair;
+// };
+
 export const getSigner = () => {
 	const sender = getActiveAddress();
 
@@ -40,6 +46,7 @@ export const getSigner = () => {
 
 	throw new Error(`keypair not found for sender: ${sender}`);
 };
+
 
 /** Get the client for the specified network. */
 export const getClient = (network: Network) => {
@@ -71,6 +78,37 @@ export const signAndExecute = async (txb: Transaction, network: Network) => {
 			showObjectChanges: true,
 		},
 	});
+};
+
+export const setAiAgentResultBlob = async ({
+	id,
+	nonce,
+	type_name,
+	blobId,
+	blob_id_base64,
+}: {
+	id: string;
+	nonce: number;
+	type_name: string;
+	blobId: string;
+	blob_id_base64: string;
+}) => {
+	const txb = new Transaction();
+
+	txb.moveCall({
+		target: `${process.env.AI_AGENT_CONTRACT}::ai_agent::set_ai_agent_result_blob`,
+		arguments: [
+			txb.object(`${process.env.CONTAINER_OBJECT}`),
+			txb.pure.id(id),
+			txb.pure.u64(nonce),
+			txb.object(blobId),
+			txb.pure.string(blob_id_base64)
+		],
+		typeArguments: [SuiType],
+	});
+
+	const results = await signAndExecute(txb, ACTIVE_NETWORK);
+	console.log(results);
 };
 
 /** Publishes a package and saves the package id to a specified json file. */

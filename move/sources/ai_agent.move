@@ -2,12 +2,14 @@ module sui_ai_agent::ai_agent {
     use sui::event::{emit};
     use sui::transfer::{Self};
     use sui::coin::{Self, Coin};
+    use sui::dynamic_field as df;
     use std::string::{Self, String};
     use sui::object::{Self, UID, ID};
     use sui::balance::{Self, Balance};
     use sui::dynamic_object_field as dof;
     use std::type_name::{Self, TypeName};
     use sui::tx_context::{Self, TxContext};
+    use blob_store::blob::{Self, Blob};
 
     const ENameInvalid: u64 = 0;
     const EEncryptURLInvalid: u64 = 1;
@@ -16,6 +18,10 @@ module sui_ai_agent::ai_agent {
     const ECoinAmountInvalid: u64 = 4;
     const EAddressInvalid: u64 = 6;
     const EZEROBalance: u64 = 7;
+
+    struct AdminCap has key, store {
+        id: UID
+    }
 
     struct Container has key, store {
         id: UID
@@ -56,7 +62,15 @@ module sui_ai_agent::ai_agent {
         id: ID,
         params: String,
         nonce: u64,
-        caller: address
+        caller: address,
+        type_name: TypeName,
+    }
+
+    struct CallAIResult has copy, drop {
+        id: ID,
+        nonce: u64,
+        blob_id_num: u256,
+        blob_id_base64: String,
     }
 
     struct UpdateNameMessage has copy, drop {
@@ -94,6 +108,9 @@ module sui_ai_agent::ai_agent {
     fun init(ctx: &mut TxContext) {
         let container = Container { id: object::new(ctx) };
         transfer::public_share_object(container);
+
+        let admin_cap = AdminCap { id: object::new(ctx) };
+        transfer::public_transfer(admin_cap, tx_context::sender(ctx));
     }
 
     public fun create_ai_agent<CoinType>(
@@ -167,6 +184,9 @@ module sui_ai_agent::ai_agent {
             balance,
         } = agent;
 
+        let addr = tx_context::sender(ctx);
+        assert!(addr == receive_address, EAddressInvalid);
+
         let coin_amount = balance::value(&balance);
         if (coin_amount > 0) {
             let coin = coin::from_balance(balance, ctx);
@@ -201,12 +221,34 @@ module sui_ai_agent::ai_agent {
 
         agent.nonce = agent.nonce + 1;
 
+        let type_name = type_name::get<CoinType>();
         emit(CallAIMessage {
             id: object::uid_to_inner(&agent.id),
             params,
             nonce: agent.nonce,
-            caller: tx_context::sender(ctx)
+            caller: tx_context::sender(ctx),
+            type_name
         });
+    }
+
+    public fun set_ai_agent_result_blob<CoinType>(
+        container: &mut Container,
+        id: ID,
+        nonce: u64,
+        result: Blob,
+        blob_id_base64: String,
+    ) {
+        let agent = dof::borrow_mut<Item, Agent<CoinType>>(&mut container.id, Item { id });
+
+        let blob_id_num = blob::blob_id(&result);
+        df::add(&mut agent.id, nonce, result);
+
+        emit(CallAIResult {
+            id,
+            nonce,
+            blob_id_num,
+            blob_id_base64
+        })
     }
 
     public fun claim<CoinType>(
