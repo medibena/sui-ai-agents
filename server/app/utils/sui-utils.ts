@@ -83,12 +83,14 @@ export const signAndExecute = async (txb: Transaction, network: Network) => {
 export const setAiAgentResultBlob = async ({
 	id,
 	nonce,
+	caller,
 	type_name,
 	blobId,
 	blob_id_base64,
 }: {
 	id: string;
 	nonce: number;
+	caller: string;
 	type_name: string;
 	blobId: string;
 	blob_id_base64: string;
@@ -101,6 +103,7 @@ export const setAiAgentResultBlob = async ({
 			txb.object(`${process.env.CONTAINER_OBJECT}`),
 			txb.pure.id(id),
 			txb.pure.u64(nonce),
+			txb.pure.address(caller),
 			txb.object(blobId),
 			txb.pure.string(blob_id_base64)
 		],

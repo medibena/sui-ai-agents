@@ -115,6 +115,14 @@ export type CallAIMessage = {
     type_name: string;
 }
 
+export type CallAIResult = {
+    id: string;
+    nonce: number;
+    blob_id_base64: string;
+    blob_id_num: string;
+    caller: string;
+}
+
 export type UpdateNameMessage = {
     id: string;
     name: string;

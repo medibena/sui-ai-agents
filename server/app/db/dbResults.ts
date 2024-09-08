@@ -20,6 +20,19 @@ export default class DbResults {
         return p + "/" + nonce + ".json";
     }
 
+    public static WriteAIResult(caller: string, id: string, nonce: number, blob_id_base64: string, blob_id_num: string) {
+        var data_path = this.getDataPath(caller, id, nonce);
+
+        if (fs.existsSync(data_path)) {
+            let result = fs.readFileSync(data_path).toString();
+            let data_result = JSON.parse(result);
+
+            data_result.blob_id_base64 = blob_id_base64;
+            data_result.blob_id_num = blob_id_num;
+            writeFileSync(data_path, data_result);
+        }
+    }
+
     public static WriteResult(caller: string, id: string, nonce: number, result: any): string {
         var data_path = this.getDataPath(caller, id, nonce);
 

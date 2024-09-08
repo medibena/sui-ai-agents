@@ -11,6 +11,7 @@ import {
 	UpdateDescriptionMessage,
 	UpdateReceiveAddressMessage,
 	UpdatePriceMessage,
+	CallAIResult,
 } from '../typing';
 
 import aes from '../encryption/aes';
@@ -41,11 +42,16 @@ export const handleEventObjects = async (events: SuiEvent[], type: string) => {
 		} else if (type.indexOf("CallAIResult") != -1) {
 			console.log("CallAIResult")
 			console.log(event.parsedJson)
+			handleCallAIResult(event, event.parsedJson as CallAIResult)
 		}
 	}
 
 	await Promise.resolve();
 };
+
+export const handleCallAIResult = async (event: SuiEvent, message: CallAIResult) => {
+	DbResults.WriteAIResult(message.caller, message.id, message.nonce, message.blob_id_base64, message.blob_id_num);
+}
 
 export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessage) => {
 	let id = message.id;
@@ -85,6 +91,7 @@ export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessag
 			if (blobResult.blob_id) {
 				await setAiAgentResultBlob({
 					id,
+					caller,
 					nonce,
 					type_name,
 					blobId: blobResult.sui_object_id,

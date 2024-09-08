@@ -29,6 +29,7 @@ export function History() {
                 item.link = "https://suivision.xyz/txblock/" + item.txid;
             } else {
                 item.link = "https://" + Contract.Network + ".suivision.xyz/txblock/" + item.txid;
+                item.blob_id_link = "https://aggregator-devnet.walrus.space/v1/" + item.blob_id_base64;
             }
             let txid: string = item.txid;
             item.txid_good = txid.substring(0, 8) + "..." + txid.substring(txid.length - 6)
@@ -82,6 +83,14 @@ export function History() {
                                             </Box>
                                             <Box>
                                                 <Link target="_blank" href={jsonData.link}>{jsonData.txid_good}</Link>
+                                            </Box>
+                                        </Flex>
+                                        <Flex position="sticky" justify="between">
+                                            <Box>
+                                                <Text>walrus Blob ID</Text>
+                                            </Box>
+                                            <Box>
+                                                <Link target="_blank" href={jsonData.blob_id_link}>{jsonData.blob_id_base64}</Link>
                                             </Box>
                                         </Flex>
                                     </Card>

@@ -19,10 +19,6 @@ module sui_ai_agent::ai_agent {
     const EAddressInvalid: u64 = 6;
     const EZEROBalance: u64 = 7;
 
-    struct AdminCap has key, store {
-        id: UID
-    }
-
     struct Container has key, store {
         id: UID
     }
@@ -71,6 +67,7 @@ module sui_ai_agent::ai_agent {
         nonce: u64,
         blob_id_num: u256,
         blob_id_base64: String,
+        caller: address,
     }
 
     struct UpdateNameMessage has copy, drop {
@@ -108,9 +105,6 @@ module sui_ai_agent::ai_agent {
     fun init(ctx: &mut TxContext) {
         let container = Container { id: object::new(ctx) };
         transfer::public_share_object(container);
-
-        let admin_cap = AdminCap { id: object::new(ctx) };
-        transfer::public_transfer(admin_cap, tx_context::sender(ctx));
     }
 
     public fun create_ai_agent<CoinType>(
@@ -235,6 +229,7 @@ module sui_ai_agent::ai_agent {
         container: &mut Container,
         id: ID,
         nonce: u64,
+        caller: address,
         result: Blob,
         blob_id_base64: String,
     ) {
@@ -247,7 +242,8 @@ module sui_ai_agent::ai_agent {
             id,
             nonce,
             blob_id_num,
-            blob_id_base64
+            blob_id_base64,
+            caller
         })
     }
 
