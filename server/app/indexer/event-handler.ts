@@ -88,7 +88,7 @@ export const handleCallAIMessage = async (event: SuiEvent, message: CallAIMessag
 			let blobResult = await walrusUpload(data_path);
 
 			console.log(blobResult)
-			if (blobResult.blob_id) {
+			if (blobResult.blob_id && blobResult.sui_object_id) {
 				await setAiAgentResultBlob({
 					id,
 					caller,

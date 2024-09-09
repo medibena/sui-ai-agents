@@ -1,5 +1,6 @@
 // export const ApiEndpoint = "http://localhost:3000/v1/ai"
-export const ApiEndpoint = "http://192.168.2.223:3000/v1/ai"
+// export const ApiEndpoint = "http://192.168.2.223:3000/v1/ai"
+export const ApiEndpoint = "http://119.45.134.208:3000/v1/ai"
 
 export const Contract = {
   PackageId: "0x83076db923c7d6528e74fd7eafc568fc21e0f4e594cc97a0610ff7c1c8b16e6a",
