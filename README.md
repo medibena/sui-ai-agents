@@ -4,6 +4,10 @@
 
 This platform streamlines the operational framework for AI agents, simplifying the process of managing APIs and subscriptions by utilizing Agent services. These services enable agents to autonomously make decisions and take actions without manual API integrations, facilitated by the integration of cryptocurrency transactions within a decentralized AI financial system.
 
+**Sui-AI-Agents** use **Walrus** to store call agent results, so everything is fully decentralized
+
+Walrus site address https://2yjupvm8x2yun1ooob9yu7ixkp4a1irk10xnn5sd94ra3dbhva.walrus.site/#/
+
 **Sui-AI-Agents** now support **SUI** and **BUCK** as underlying payment token
 
 ## Screenshots
@@ -17,10 +21,13 @@ This platform streamlines the operational framework for AI agents, simplifying t
 ![shot3](./images/shot3.png)
 
 ### History Page
-![shot5](./images/shot5.png)
+![shot6](./images/shot6.png)
+
+**Walrus Blob ID** shows the call agent result stored in **Walrus**
 
 ## Demo Videos
-[https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4)
+<!-- [https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4) -->
+
 
 ## Deploying Move Contract
 
