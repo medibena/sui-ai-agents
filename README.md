@@ -28,6 +28,11 @@ Walrus site address https://2yjupvm8x2yun1ooob9yu7ixkp4a1irk10xnn5sd94ra3dbhva.w
 ## Demo Videos
 <!-- [https://www.youtube.com/watch?v=7yProe47ni4](https://www.youtube.com/watch?v=7yProe47ni4) -->
 
+<video controls>
+  <source src="https://aggregator-devnet.walrus.space/v1/3yEQlCV_2fQ4ZETNNUnLdmv2BPQFi5EpZAVtN-izRTo" type="video/mp4">
+</video>
+
+https://aggregator-devnet.walrus.space/v1/3yEQlCV_2fQ4ZETNNUnLdmv2BPQFi5EpZAVtN-izRTo
 
 ## Deploying Move Contract
 
