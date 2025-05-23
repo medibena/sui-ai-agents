@@ -23,27 +23,26 @@ export function Header() {
             <Flex
                 position="sticky"
                 px="4"
-                py="2"
+                py="4"
                 justify="between"
                 style={{
-                    borderBottom: "1px solid var(--gray-a2)",
+                    borderBottom: "1px solid var(--border)",
+                    backgroundColor: "var(--card-bg)",
+                    marginBottom: "2rem"
                 }}
             >
                 <Box>
-                    <Heading>Sui AI Agents</Heading>
+                    <Heading size="6" style={{ color: "var(--accent)" }}>Sui AI Agents</Heading>
                 </Box>
 
-                <Box className="flex gap-5 items-center">
+                <Box className="flex gap-8 items-center">
                     {menu.map((item) => (
                         <NavLink
                             key={item.link}
                             to={item.link}
                             className={({ isActive, isPending }) =>
-                                `cursor-pointer flex items-center gap-2 ${isPending
-                                    ? "pending"
-                                    : isActive
-                                        ? "font-bold text-blue-600"
-                                        : ""
+                                `cursor-pointer flex items-center gap-2 text-lg font-medium transition-colors ${
+                                    isPending ? "text-muted" : isActive ? "active" : "hover:text-accent"
                                 }`
                             }
                         >

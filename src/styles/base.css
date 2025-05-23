@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --background: #0a0a0a;
+  --foreground: #fafafa;
+  --card-bg: #1a1a1a;
+  --accent: #3b82f6;
+  --accent-hover: #2563eb;
+  --border: #2a2a2a;
+  --muted: #666666;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
 .connect-wallet-wrapper > button {
   @apply !bg-transparent !shadow-none !flex-shrink-0 !py-2 !px-3 !text-sm;
 }
@@ -13,14 +28,66 @@
 .SelectContent {
   width: var(--radix-select-trigger-width);
   max-height: var(--radix-select-content-available-height);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
 }
 
-.SelfButton {
-  background-color: white;
-  color: var(--violet-11);
-  box-shadow: 0 2px 10px var(--black-a7);
+.rt-Card {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
 }
 
-.SelfButton:hover {
-  
+.rt-Button {
+  background-color: var(--accent) !important;
+  color: var(--foreground) !important;
+  transition: background-color 0.2s ease;
+}
+
+.rt-Button:hover {
+  background-color: var(--accent-hover) !important;
+}
+
+.rt-TextFieldInput {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--foreground) !important;
+}
+
+.rt-TextAreaInput {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--foreground) !important;
+}
+
+.rt-DialogContent {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.rt-AlertDialogContent {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.rt-SelectTrigger {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+  color: var(--foreground) !important;
+}
+
+.rt-SelectContent {
+  background-color: var(--card-bg) !important;
+  border: 1px solid var(--border) !important;
+}
+
+.rt-SelectItem {
+  color: var(--foreground) !important;
+}
+
+.rt-SelectItem:hover {
+  background-color: var(--accent) !important;
+}
+
+.active {
+  color: var(--accent) !important;
 }
